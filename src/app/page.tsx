@@ -72,10 +72,10 @@ export default function Home() {
 
   const handleSort = (field: string) => {
     if (sortField === field) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+      setSortOrder(sortOrder === "desc" ? "asc" : "desc");
     } else {
       setSortField(field);
-      setSortOrder("asc");
+      setSortOrder("desc");
     }
   };
 
@@ -86,7 +86,7 @@ export default function Home() {
   };
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-3" style={{paddingBottom:'40px'}}>
       <h1 style={{ textAlign: "center", paddingBottom: "6px" }}>
         TrashBinDashboard
       </h1>
@@ -105,12 +105,12 @@ export default function Home() {
       </div>
 
       <TableComponent bins={currentItems} />
-      <MapComponent bins={bins} />
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
+      <MapComponent bins={bins} />
     </div>
   );
 }
