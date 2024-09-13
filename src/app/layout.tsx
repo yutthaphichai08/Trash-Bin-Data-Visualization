@@ -16,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "TrashBinDashboard.",
-  description: "TrashBinDashboard.",
+  title: "TrashBinDashboard",
+  description: "TrashBinDashboard",
 };
 
 export default function RootLayout({
