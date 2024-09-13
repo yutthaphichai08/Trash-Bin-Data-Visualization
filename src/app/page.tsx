@@ -6,11 +6,15 @@ import PaginationControls from "./componnets/Pagination";
 import SearchBar from "./componnets/SearchBar";
 import SortDropdown from "./componnets/SortDropdown";
 import TableComponent from "./componnets/TableComponent";
+import MapComponent from "./componnets/MapComponent";
+
 
 interface TrashBin {
   id: string;
   location: string;
   fillLevel: number;
+  lat: number;
+  lng: number;
 }
 
 export default function Home() {
@@ -25,10 +29,11 @@ export default function Home() {
     fetchData();
   }, []);
 
+
   const fetchData = async () => {
     try {
       const res = await fetch(
-        "https://66e3e267d2405277ed122ca4.mockapi.io/trash-bins"
+        "https://66e43805d2405277ed138dea.mockapi.io/trash-bins"
       );
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -100,7 +105,7 @@ export default function Home() {
       </div>
 
       <TableComponent bins={currentItems} />
-
+      <MapComponent bins={bins} />
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
