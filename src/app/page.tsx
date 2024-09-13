@@ -48,9 +48,7 @@ export default function Home() {
     if (sortField === "id") {
       const numA = parseFloat(a.id); // Convert to number
       const numB = parseFloat(b.id); // Convert to number
-      return sortOrder === "asc"
-        ? numA - numB
-        : numB - numA;
+      return sortOrder === "asc" ? numA - numB : numB - numA;
     }
     if (sortField === "fillLevel") {
       return sortOrder === "asc"
@@ -59,7 +57,6 @@ export default function Home() {
     }
     return 0;
   });
-  
 
   const totalItems = sortedBins.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -84,7 +81,11 @@ export default function Home() {
   };
 
   return (
-    <div className="container">
+    <div className="container mt-3">
+      <h1 style={{ textAlign: "center", paddingBottom: "6px" }}>
+        TrashBinDashboard
+      </h1>
+
       <ChartComponent data={sortedBins} />
       <SearchBar
         value={searchTerm}
