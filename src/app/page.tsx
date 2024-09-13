@@ -87,16 +87,20 @@ export default function Home() {
       </h1>
 
       <ChartComponent data={sortedBins} />
-      <SearchBar
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <SortDropdown
-        sortField={sortField}
-        sortOrder={sortOrder}
-        onSort={handleSort}
-      />
+      <div style={{ display: "flex", gap: "4px" }}>
+        <SortDropdown
+          sortField={sortField}
+          sortOrder={sortOrder}
+          onSort={handleSort}
+        />
+        <SearchBar
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       <TableComponent bins={currentItems} />
+
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
