@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Dropdown,
   DropdownButton,
@@ -17,6 +16,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 
 interface TrashBin {
@@ -105,16 +105,26 @@ export default function Home() {
       {/* แผนภูมิ */}
       <div className="my-4">
         <h3>Trash Bin Fill Levels</h3>
+
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={sortedBins}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="location" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="fillLevel" fill="#8884d8" />
+            <Bar dataKey="fillLevel">
+              {sortedBins.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.fillLevel > 80000 ? "#ff0000" : "#8884d8"}
+                />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
+        
       </div>
+
       <h2 className="my-4">Trash Bins List</h2>
 
       {/* ค้นหาสำหรับกรอง */}
