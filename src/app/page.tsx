@@ -46,9 +46,11 @@ export default function Home() {
 
   const sortedBins = filteredBins.sort((a, b) => {
     if (sortField === "id") {
+      const numA = parseFloat(a.id); // Convert to number
+      const numB = parseFloat(b.id); // Convert to number
       return sortOrder === "asc"
-        ? a.id.localeCompare(b.id)
-        : b.id.localeCompare(a.id);
+        ? numA - numB
+        : numB - numA;
     }
     if (sortField === "fillLevel") {
       return sortOrder === "asc"
@@ -57,6 +59,7 @@ export default function Home() {
     }
     return 0;
   });
+  
 
   const totalItems = sortedBins.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
