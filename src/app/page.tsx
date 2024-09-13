@@ -7,6 +7,7 @@ import {
   DropdownButton,
   FormControl,
   InputGroup,
+  Pagination,
 } from "react-bootstrap";
 import {
   BarChart,
@@ -29,6 +30,10 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>(""); // สำหรับการค้นหา
   const [sortField, setSortField] = useState<string>(""); // สำหรับการเรียงลำดับ
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(10); // จำนวนรายการต่อหน้า
 
   useEffect(() => {
     fetchData();
@@ -69,6 +74,14 @@ export default function Home() {
     return 0;
   });
 
+  // Pagination calculations
+  const totalItems = sortedBins.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const currentItems = sortedBins.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const handleSort = (field: string) => {
     if (sortField === field) {
       // สลับระหว่าง "asc" และ "desc" ถ้าเลือกฟิลด์เดิม
@@ -77,6 +90,13 @@ export default function Home() {
       // ตั้งค่าเป็นฟิลด์ใหม่และเรียงลำดับเป็น "asc"
       setSortField(field);
       setSortOrder("asc");
+    }
+  };
+
+  // Pagination controls
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
@@ -138,10 +158,10 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {sortedBins.map((bin) => (
+          {currentItems.map((bin) => (
             <tr
               key={bin.id}
-              className={bin.fillLevel >= 80 ? "table-danger" : ""}
+              className={bin.fillLevel >= 80000 ? "table-danger" : ""}
             >
               <td>{bin.location}</td>
               <td>{bin.fillLevel}%</td>
@@ -150,6 +170,29 @@ export default function Home() {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination controls */}
+      <div className="d-flex justify-content-center my-4">
+        <Pagination>
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Pagination.Item
+              key={i + 1}
+              active={i + 1 === currentPage}
+              onClick={() => handlePageChange(i + 1)}
+            >
+              {i + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
+      </div>
     </div>
   );
 }
