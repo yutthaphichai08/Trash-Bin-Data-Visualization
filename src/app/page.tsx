@@ -6,8 +6,7 @@ import PaginationControls from "./componnets/Pagination";
 import SearchBar from "./componnets/SearchBar";
 import SortDropdown from "./componnets/SortDropdown";
 import TableComponent from "./componnets/TableComponent";
-import MapComponent from "./componnets/MapComponent";
-
+import dynamic from "next/dynamic";
 
 interface TrashBin {
   id: string;
@@ -29,7 +28,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-
   const fetchData = async () => {
     try {
       const res = await fetch(
@@ -44,6 +42,10 @@ export default function Home() {
       console.error("Error fetching data:", error);
     }
   };
+
+  const MapComponent = dynamic(() => import("./componnets/MapComponent"), {
+    ssr: false, // Disable server-side rendering
+  });
 
   const filteredBins = bins.filter((bin) =>
     bin.location.toLowerCase().includes(searchTerm.toLowerCase())
@@ -86,7 +88,7 @@ export default function Home() {
   };
 
   return (
-    <div className="container mt-3" style={{paddingBottom:'40px'}}>
+    <div className="container mt-3" style={{ paddingBottom: "40px" }}>
       <h1 style={{ textAlign: "center", paddingBottom: "6px" }}>
         TrashBinDashboard
       </h1>

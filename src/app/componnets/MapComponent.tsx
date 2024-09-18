@@ -52,7 +52,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ bins }) => {
               Fill Level: {bin.fillLevel}%
             </Popup>
           </Marker>
-        ) : null 
+        ) : null
       )}
     </MapContainer>
   );
